@@ -1,0 +1,35 @@
+group 'mx.spring.com'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile(project(':framework'))
+}
+
+//task"create-dirs" << {
+//
+//    sourceSets*.java.srcDirs*.each { it.mkdirs() }
+//
+//    sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+//
+//}
+
+jar{
+    manifest{
+        attributes "Main-Class": "com.mooc.mx.Application"
+    }
+    from{
+        configurations.compile.collect{
+            it.isDirectory()?it: zipTree(it)
+        }
+    }
+
+}
